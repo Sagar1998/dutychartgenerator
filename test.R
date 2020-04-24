@@ -1,6 +1,6 @@
 library("data.table")
 library(tidyverse)
-train <- read_csv("chart.csv")
+train <- read_csv("allotclass.csv")
 View(train)
 # library(dplyr)
 # library(caret)
@@ -12,10 +12,10 @@ View(train)
 # .
 # names(train)[50]<-"X50"
 print(names(train)[56])
-for(x in (5:56)){
+for(x in (6:57)){
   names(train)[x]<-paste("X",x,sep='')
 }
-# View(train)
+View(train)
 
 # print(names(train[56]))
 
@@ -24,9 +24,9 @@ for(x in (5:56)){
 # subx=subset(train,X4==0)
 # View(subx)
 
-sub=subset(train,!is.na(X5),select = X2)
-sub=tail(sub,nrow(sub)-2)
-# View(sub)
+#sub=subset(train,!is.na(X5),select = X2)
+#sub=tail(sub,nrow(sub)-2)
+#View(sub)
 sub1=subset(train,!is.na(X6),select = X2)
 sub1=tail(sub1,nrow(sub1)-2)
 # View(sub1)
@@ -180,11 +180,12 @@ sub50=tail(sub50,nrow(sub50)-2)
 sub51=subset(train,!is.na(X56),select = X2)
 sub51=tail(sub51,nrow(sub51)-2)
 # View(sub51)
+sub52=subset(train,!is.na(X57),select = X2)
+sub52=tail(sub52,nrow(sub52)-2)
+# View(sub51)
 
 
 
-
-day11=(cbind(sub,matrix(data=sample.int(40, nrow(sub)),nrow=nrow(sub),ncol=1)))
 day12=(cbind(sub1,matrix(data=sample.int(40, nrow(sub1)),nrow=nrow(sub1),ncol=1)))
 day21=(cbind(sub2,matrix(data=sample.int(40, nrow(sub2)),nrow=nrow(sub2),ncol=1)))
 day22=(cbind(sub3,matrix(data=sample.int(40, nrow(sub3)),nrow=nrow(sub3),ncol=1)))
@@ -236,6 +237,7 @@ day251=(cbind(sub48,matrix(data=sample.int(40, nrow(sub48)),nrow=nrow(sub48),nco
 day252=(cbind(sub49,matrix(data=sample.int(40, nrow(sub49)),nrow=nrow(sub49),ncol=1)))
 day261=(cbind(sub50,matrix(data=sample.int(40, nrow(sub50)),nrow=nrow(sub50),ncol=1)))
 day262=(cbind(sub51,matrix(data=sample.int(40, nrow(sub51)),nrow=nrow(sub51),ncol=1)))
+day11=(cbind(sub52,matrix(data=sample.int(40, nrow(sub52)),nrow=nrow(sub52),ncol=1)))
 
 
 day11[day11=="1"]<-"R101"
@@ -2618,27 +2620,25 @@ final48=merge(final47,day251,all=TRUE)
 final49=merge(final48,day252,all=TRUE)
 #View(final49)
 final50=merge(final49,day261,all=TRUE)
-#View(final50)
+View(final50)
 final51=merge(final50,day262,all=TRUE)
+
+
+final51=final51[is.na(final51)]<-""
 View(final51)
-
-# print(names(final51)[36])
-
-
-write.csv(final51,"finalcheck.csv", row.names = FALSE)
+#write.csv(final51,"classallotted.csv", row.names = FALSE,is.na(final51)<-"")
 
 
-library(sqldf)
-print(test)
-View(check<-sqldf('SELECT * FROM final51 where NAME="Bhagyashri patil"'))
- # install.packages("RMySQL")
- library(RMySQL)
- mydb = dbConnect(MySQL(), user='root', password='12345678', dbname='train', host='localhost') 
- dbListTables(mydb)
- dbSendQuery(mydb, 'drop table if exists chart, some_other_table')
- dbWriteTable(mydb, name='chart', value=final51)
-rs= dbSendQuery(mydb, "select * from chart")
- data = fetch(rs, n=-1)
-View(data) 
+#library(sqldf)
+#print(test)
+#View(check<-sqldf('SELECT * FROM final51 where NAME="Bhagyashri patil"'))
+# install.packages("RMySQL")
+#library(RMySQL)
+#mydb = dbConnect(MySQL(), user='root', password='12345678', dbname='train', host='localhost') 
+#dbListTables(mydb)
+#dbSendQuery(mydb, 'drop table if exists chart, some_other_table')
+#dbWriteTable(mydb, name='chart', value=final51)
+#rs= dbSendQuery(mydb, "select * from chart")
+#data = fetch(rs, n=-1)
+#View(data) 
 
-  
